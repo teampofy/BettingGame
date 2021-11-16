@@ -5,60 +5,94 @@ public class BettingGuy
     //1st list the properties of the class
     public string Name;
     public int Cash;
-    public double odds = .75;
+    public bool Availability;
+
+
+    Random random = new Random();
+    public static double randomValue;
+    public static int wage;
+    public static double odds = .75;
     public static int potBalance = 0;
 
-    //2nd list the methods of the class
 
-    //method 1 will display the name and the amount of cash held
-    public void WriteMyInfo()
+
+    //method 0 will display the name and the amount of cash held
+    public bool WriteMyInfo()
     {
-        Console.WriteLine("Welcome to the casino. The odds are "+odds+".\n" +
-            "The player has "+Cash+" bucks.");
+        Console.WriteLine("Welcome to the casino. \n" +
+            "The odds are " + odds + ".\n" +
+            "The player has " + Cash + " bucks.");
+        return true;
     }
 
-    //method 2 what happens when the player places a bet
-    public void makeABet(int amount, double randomGeneratedOdds)
-    //place all code in this block
+    //method 1 captures customer input
+
+    public bool howMuchDoYouWantToBet(string howMuch)
     {
-        if (amount <= 0)
-        {
-            Console.WriteLine("Sorry "+ amount + " isn't a valid amount");
-        }
-
-        else if (amount > Cash)
-        {
-            Console.WriteLine("You don't have enough cash to place this bet!");
-        }
-
-        //place code that uses amount and places into another agrument
-        else
-        {
-
-            //if win the bet, we must double the cash , and return the won amount
-            if (randomGeneratedOdds >= odds)
+    //check if user enters a numerical value
+            if (int.TryParse(howMuch, out int amount))
             {
-                //to calculate the amount won
-                amount *= 2;
-                //add calculated amount won to winnings
-                Cash += amount * 2;
-                //Display what was won and new balance
-                Console.WriteLine("You won " + amount + " which means you won " +
-                    "and now have " + Cash + " dollars.\n");
+                wage = amount;
+
+                //here we know the customer has at least 1 dollar
+                //so now we can check if use as enough money to make bet
+                if (wage > Cash)
+                {
+                    Console.WriteLine("You don't have enough cash to " +
+                        "place this bet!\n");
+                    return false;
+                }
+                //if user has enough money for wage then we run the code
+                else
+                {
+                    return true;
+                }
             }
             else
             {
-                //remove the money lost
-                Cash -= amount;
-                //add lost amount back to the calculated amount won to winnings
-                potBalance += amount;
-                //Display what was won and new balance
-                Console.WriteLine("You lost " + amount + " which means you now only have "
-                    + Cash + " dollars.\n");
+                //need to add a statement to end user about issue
+                Console.WriteLine("Sorry " + wage + " isn't a valid amount\n");
+                return false;
             }
-                 
+    }
+
+
+
+
+    //method 2 to check if player wins
+    public bool playerPlays()
+    {
+        randomValue = random.NextDouble();
+
+        if (randomValue > odds)
+        {
+            //if user odds is greater than the fixed percentage user wins
+            //add the winnings to the user
+            //to calculate the amount won
+            wage = (wage * 2);
+            //add calculated amount won to winnings
+            Cash = (Cash + wage);
+            //Display what was won and new balance
+            Console.WriteLine("You won " + wage + " which means you now have " + Cash +
+                " dollars.\n");
+            return true;
+
         }
 
-    }
+        else
+        {
+            //else remove the wage from user and add wage to pot
+            //remove the money lost
+            Cash -= wage;
+            //add lost amount back to the calculated amount won to winnings
+            potBalance += wage;
+            //Display what was lost and new balance
+            Console.WriteLine("You lost " + wage + " which means you now only have "
+                    + Cash + " dollars.\n");
 
+            return false;
+        }
     }
+}
+
+          
