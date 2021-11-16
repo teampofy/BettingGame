@@ -3,29 +3,36 @@
 
 public class Program
 {
-        public static void Main(string[] args)
+    public static void Main(string[] args)
+    {
+
+        //Creation of the player with the default values
+        BettingGuy player = new BettingGuy() { Cash = 100, Name = "The player", Availability = true };
+
+        //Displays introduction
+        player.WriteMyInfo();
+
+        while (player.Availability)
         {
-
-            //Creation of the player with the default values
-            BettingGuy player = new BettingGuy() { Cash = 100, Name = "The player", Availability = true };
-
-            //Displays introduction
-            player.WriteMyInfo();
-
-            while(player.Availability) 
+            if (player.Cash > 0)
             {
-            if(player.Cash > 0)
-                {
-                    Console.Write("How much do you want to bet: ");
-                    String howMuch = Console.ReadLine();
+                //Only display if the user has at least 1 dollar
+                Console.Write("How much do you want to bet: ");
+                String howMuch = Console.ReadLine();
 
-                    player.howMuchDoYouWantToBet(howMuch);
+                //only run if customer places a eligble bet
+                if (player.howMuchDoYouWantToBet(howMuch))
+                {
+                    //if customer plays an eligble wage play the game
                     player.playerPlays();
                 }
-            else
-                {
-                player.Availability = false;
-                }
             }
+
+            //if customer doesnt have any money to place a bet turn off game
+            else
+            {
+                player.Availability = false;
+            }
+        }
     }
 }

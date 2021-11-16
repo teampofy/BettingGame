@@ -5,16 +5,13 @@ public class BettingGuy
     //1st list the properties of the class
     public string Name;
     public int Cash;
-    public bool Availability;
-
+    public bool Availability; // to indicate whether to ask the user to play again
 
     Random random = new Random();
     public static double randomValue;
     public static int wage;
     public static double odds = .75;
     public static int potBalance = 0;
-
-
 
     //method 0 will display the name and the amount of cash held
     public bool WriteMyInfo()
@@ -26,7 +23,6 @@ public class BettingGuy
     }
 
     //method 1 captures customer input
-
     public bool howMuchDoYouWantToBet(string howMuch)
     {
     //check if user enters a numerical value
@@ -51,13 +47,10 @@ public class BettingGuy
             else
             {
                 //need to add a statement to end user about issue
-                Console.WriteLine("Sorry " + wage + " isn't a valid amount\n");
+                Console.WriteLine("Sorry " + howMuch + " isn't a valid amount\n");
                 return false;
             }
     }
-
-
-
 
     //method 2 to check if player wins
     public bool playerPlays()
